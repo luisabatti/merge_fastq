@@ -84,9 +84,6 @@ echo ".fastq file 2 has ${FASTQ_FILE_R_LINES} entries"
 FASTQ_FILE_LINES=$(($FASTQ_FILE_F_LINES + $FASTQ_FILE_R_LINES))
 echo "Merged .fastq file should have ${FASTQ_FILE_LINES} lines in total"
 
-#FASTQ_FILE_ARRAY=($(seq 1 1 ${FASTQ_FILE_LINES}))
-#echo "array starts with ${FASTQ_FILE_ARRAY[0]} and ends with ${FASTQ_FILE_ARRAY[${#FASTQ_FILE_ARRAY[@]} - 1]}"
-
 cat ${FASTQ_FILE_F} ${FASTQ_FILE_R} | zcat | awk '{for(i=1;i<=NF;i++){if($i~/(@[0-9]+)/){sub(/(@[0-9]+)/,"@"++count,$i)}}} 1' | gzip > ${FASTQ_FILE_MERGED}
 #### Replace lines with "@number" incrementing order
 echo "Merged ${FASTQ_FILE_F} and ${FASTQ_FILE_R} into ${FASTQ_FILE_MERGED}"
